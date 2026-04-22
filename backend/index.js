@@ -1,29 +1,18 @@
-import express from "express";
-import mongoose, { get } from "mongoose";
-
+const express = require('express');
+const cors = require('cors');
 const app = express();
+const connectDB = require("./config/db");
 
-const restaurant = new mongoose.Schema({
-    restaurant_name = String,
-    restaurant_location = String,
-    restaurant_owner_name = String,
-    restuarnt_owner_age = Number,
-    restaurant_doe = String
-});
+app.use(cors());
+app.use(express.json());
+
+connectDB();
 
 app.get("/", () => {
     console.log("hello");
 })
 
-app.get("/get-data", () => {
-});
+app.use("/api/restaurant", require("./routes/restaurantRoutes"));
 
-app.post("/add");
-
-app.put("/edit/:id");
-
-app.delete("/delete/:id");
-
-app.listen(5000, () => {
-    console.log("server running on port 5000");
-})
+const PORT = 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
